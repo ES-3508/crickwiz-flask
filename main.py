@@ -1,23 +1,26 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import mysql.connector
-from flask_cors import CORS  # Import CORS
+from mysql.connector import pooling
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # This will load environment variables from .env file
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS on the Flask app
-app = Flask(__name__)
+CORS(app)
 
-# Configure database connection pool
+# Configure database connection pool using environment variables
 dbconfig = {
-    "host": "localhost",
-    "user": "root",
-    "password": "Achini@143",
-    "database": "crickwiz"
+    "host": os.getenv("DATABASE_HOST"),
+    "user": os.getenv("DATABASE_USER"),
+    "password": os.getenv("DATABASE_PASSWORD"),
+    "database": os.getenv("DATABASE_NAME")
 }
 pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool",
                                                    pool_size=5,
                                                    pool_reset_session=True,
                                                    **dbconfig)
-
 def get_db_connection():
     try:
         conn = pool.get_connection()
@@ -143,4 +146,5 @@ def get_unique_countries():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = os.getenv("PORT", 5000)  # Default to 5000 if no port specified in .env
+    app.run(debug=True, port=int(port))
