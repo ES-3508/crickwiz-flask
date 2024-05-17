@@ -1,7 +1,10 @@
 import mysql.connector
 from mysql.connector import Error
-import os
+
 from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def import_sql_dump(filename, host, user, password, database):
     # Connect to the MySQL database
@@ -47,6 +50,8 @@ def import_sql_dump(filename, host, user, password, database):
 
 # Usage
 # import_sql_dump('db/cricket_info_batting.sql', 'localhost', 'root', 'Achini@143', 'crickwiz')
-import_sql_dump('db/cricket_info_bowling.sql', 'os.getenv("DATABASE_HOST")', os.getenv("DATABASE_USER"), os.getenv("DATABASE_PASSWORD"), os.getenv("DATABASE_NAME"))
-import_sql_dump('db/cricket_info_bowling_wickets.sql', 'os.getenv("DATABASE_HOST")', os.getenv("DATABASE_USER"), os.getenv("DATABASE_PASSWORD"), os.getenv("DATABASE_NAME"))
-import_sql_dump('db/cricket_info_matches.sql', 'localhost', 'os.getenv("DATABASE_HOST")', os.getenv("DATABASE_USER"), os.getenv("DATABASE_PASSWORD"), os.getenv("DATABASE_NAME"))
+
+import_sql_dump('db/cricket_info_bowling.sql', 'localhost', 'root', 'admin', 'crickwiz')
+import_sql_dump('db/cricket_info_bowling_wickets.sql', 'localhost', 'root', 'admin', 'crickwiz')
+import_sql_dump('db/cricket_info_matches.sql', 'localhost', 'root', 'admin', 'crickwiz')
+
